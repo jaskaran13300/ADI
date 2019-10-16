@@ -11,25 +11,26 @@ void print(struct Node *ptr){
 	}
 	printf("\n");
 }
-void Addfl(struct Node *head,struct Node *slow,struct Node *fast){
+void swap(int *a,int *b) {
+   int temp=*a;
+   *a=*b;
+   *b=temp;
+ }
+void Reverse(struct Node *head,struct Node *slow,struct Node *fast){
 	static struct Node *temp=NULL;
-	static struct Node *temp1=NULL;
 	if(fast==NULL){
-		temp1=slow;
-		return;
+		temp=slow;
+		return ;
 	}
 	if(fast->next==NULL){
-		temp1=slow->next;
-		return;
+		temp=slow->next;
+		return ;
 	}
-	Addfl(head,slow->next,fast->next->next);
-	int sum=(slow->data)+(temp1->data);
-	slow->data=sum;
-	temp1->data=sum;
-	temp1=temp1->next;
+	Reverse(head,slow->next,fast->next->next);
+	struct Node *temp2;
+	swap(&temp->data,&slow->data);
+	temp=temp->next;
 }
-
-
 int main(){
 	int d,i=0;
 	printf("Press -1 To End insertion Operation\n");
@@ -54,8 +55,7 @@ int main(){
 		i++;
 		scanf("%d",&d);
 	}
-	struct Node *slow=head,*fast=head;
-	Addfl(slow,fast,head);
+	Reverse(head,head,head);
 	print(head);
 	return 0;
 }

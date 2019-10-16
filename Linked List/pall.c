@@ -4,32 +4,28 @@ struct Node{
 	int data;
 	struct Node *next;
 };
-void print(struct Node *ptr){
-	while(ptr!=NULL){
-		printf("%d ",ptr->data);
-		ptr=ptr->next;
-	}
-	printf("\n");
-}
-void Addfl(struct Node *head,struct Node *slow,struct Node *fast){
-	static struct Node *temp=NULL;
-	static struct Node *temp1=NULL;
+int pall(struct Node *slow,struct Node *fast,struct Node *head){
+	static int result;
+	static struct Node *temp;
 	if(fast==NULL){
-		temp1=slow;
-		return;
+		temp=slow;
+		return 1;
 	}
 	if(fast->next==NULL){
-		temp1=slow->next;
-		return;
+		temp=slow->next;
+		return 1;
+		
 	}
-	Addfl(head,slow->next,fast->next->next);
-	int sum=(slow->data)+(temp1->data);
-	slow->data=sum;
-	temp1->data=sum;
-	temp1=temp1->next;
+	result=pall(slow->next,fast->next->next,head);
+	if(result==1){
+		if(slow->data==temp->data){
+			temp=temp->next;
+			return 1;
+		}
+		else
+		return 0;
+	}
 }
-
-
 int main(){
 	int d,i=0;
 	printf("Press -1 To End insertion Operation\n");
@@ -49,13 +45,16 @@ int main(){
 			temp->next=NULL;
 			ptr->next=temp;
 			ptr=ptr->next;
-			
 		}
 		i++;
 		scanf("%d",&d);
 	}
 	struct Node *slow=head,*fast=head;
-	Addfl(slow,fast,head);
-	print(head);
+	int q=pall(slow,fast,head);
+	if(q){
+		printf("Linked List is Pallindromic\n");
+	}
+	else
+	printf("Linked List is Non Pallindromic\n");
 	return 0;
 }

@@ -4,32 +4,18 @@ struct Node{
 	int data;
 	struct Node *next;
 };
-void print(struct Node *ptr){
-	while(ptr!=NULL){
-		printf("%d ",ptr->data);
-		ptr=ptr->next;
-	}
-	printf("\n");
-}
-void Addfl(struct Node *head,struct Node *slow,struct Node *fast){
-	static struct Node *temp=NULL;
-	static struct Node *temp1=NULL;
+
+void FindMiddle(struct Node *head,struct Node *slow,struct Node *fast){
 	if(fast==NULL){
-		temp1=slow;
+		printf("%d",slow->data);
 		return;
 	}
 	if(fast->next==NULL){
-		temp1=slow->next;
+		printf("%d",slow->data);
 		return;
 	}
-	Addfl(head,slow->next,fast->next->next);
-	int sum=(slow->data)+(temp1->data);
-	slow->data=sum;
-	temp1->data=sum;
-	temp1=temp1->next;
+	FindMiddle(head,slow->next,fast->next->next);
 }
-
-
 int main(){
 	int d,i=0;
 	printf("Press -1 To End insertion Operation\n");
@@ -54,8 +40,6 @@ int main(){
 		i++;
 		scanf("%d",&d);
 	}
-	struct Node *slow=head,*fast=head;
-	Addfl(slow,fast,head);
-	print(head);
+	FindMiddle(head,head,head);
 	return 0;
 }

@@ -4,32 +4,29 @@ struct Node{
 	int data;
 	struct Node *next;
 };
-void print(struct Node *ptr){
-	while(ptr!=NULL){
-		printf("%d ",ptr->data);
-		ptr=ptr->next;
+void nNodeLast(struct Node *head,int n){
+	int k=0;
+	struct Node *slow=head,*fast=head;
+ 	 while(fast!=NULL && fast->next!=NULL){
+    if(k==n){
+      break;
+    }
+    k++;
+    fast=fast->next;
+  }
+  int f=0;
+  if(k<n){
+    printf("%d",fast->data);
+    f=1;
+  }
+  if(f!=1){
+  while(fast!=NULL && fast->next!=NULL){
+    slow=slow->next;
+    fast=fast->next;
+  }
+  printf("%d",slow->next->data);
 	}
-	printf("\n");
 }
-void Addfl(struct Node *head,struct Node *slow,struct Node *fast){
-	static struct Node *temp=NULL;
-	static struct Node *temp1=NULL;
-	if(fast==NULL){
-		temp1=slow;
-		return;
-	}
-	if(fast->next==NULL){
-		temp1=slow->next;
-		return;
-	}
-	Addfl(head,slow->next,fast->next->next);
-	int sum=(slow->data)+(temp1->data);
-	slow->data=sum;
-	temp1->data=sum;
-	temp1=temp1->next;
-}
-
-
 int main(){
 	int d,i=0;
 	printf("Press -1 To End insertion Operation\n");
@@ -54,8 +51,9 @@ int main(){
 		i++;
 		scanf("%d",&d);
 	}
-	struct Node *slow=head,*fast=head;
-	Addfl(slow,fast,head);
-	print(head);
+	int n;
+	printf("Enter the n value\n");
+	scanf("%d",&n);
+	nNodeLast(head,n);
 	return 0;
 }
