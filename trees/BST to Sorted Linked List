@@ -1,0 +1,62 @@
+//comp>O(n)
+Node<int>* constructBST(BinaryTreeNode<int>* root) {   
+    if(root==NULL) {
+        return NULL;
+    }
+    Node<int>* leftHead=constructBST(root->left);
+    Node<int>* head=new Node<int>(root->data);
+    Node<int> * temp=leftHead;
+    if(leftHead==NULL){
+        leftHead=head;
+        temp=leftHead;
+    }
+    else{
+        while(leftHead->next){
+            leftHead=leftHead->next;
+        }
+        leftHead->next=head;
+    }
+    Node<int>* rightHead=constructBST(root->right);
+    head->next=rightHead;
+    return temp;
+}
+
+//***Comp=O(n)***//
+class pairr{
+    public:
+    Node <int> * head;
+    Node <int> * tail;
+};
+pairr help(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        pairr op;
+        op.head=NULL;
+        op.tail=NULL;
+        return op;
+    }
+    pairr lo=help(root->left);
+    pairr ro=help(root->right);
+    Node<int>* head=new Node<int>(root->data);
+    if(lo.tail!=NULL){
+        lo.tail->next=head;
+    }
+    head->next=ro.head;
+    pairr op;
+    if(lo.head!=NULL){
+        op.head=lo.head;
+    }
+    else{
+        op.head=head;
+    }
+    if(ro.tail!=NULL){
+        op.tail=ro.tail;
+    }
+    else{
+        op.tail=head;
+    }
+    return op;
+}
+Node<int>* constructBST(BinaryTreeNode<int>* root) {   
+    pairr p=help(root);
+    return p.head;
+}
