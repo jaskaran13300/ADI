@@ -1,0 +1,14 @@
+BinaryTreeNode<int>* constructTreeHelp(int *input,int si,int ei) {.
+  if(si>ei){
+        return NULL;
+    }
+    int mid=(si+ei)/2;
+    BinaryTreeNode<int>* root=new BinaryTreeNode<int> (input[mid]);
+    root->left=constructTreeHelp(input,si,mid-1);
+    root->right=constructTreeHelp(input,mid+1,ei);
+    return root;
+    
+}
+BinaryTreeNode<int>* constructTree(int *input, int n) {
+  return constructTreeHelp(input,0,n-1);
+}
